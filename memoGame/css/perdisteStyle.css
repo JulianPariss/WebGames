@@ -1,0 +1,27 @@
+*{
+    margin: 0;
+    box-sizing: border-box;
+    background-color: #3A3939;
+}
+main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 70vh;
+    color: white;
+    font-size: 20px;
+    width: 100%;
+}
+
+main h2 {
+    padding: 55px 0px;
+}
+
+button{
+    padding: 15px;
+    background-color: #494949;
+    color: white;
+    margin: 20px;
+    border-radius: 16px;
+}

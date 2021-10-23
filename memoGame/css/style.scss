@@ -1,0 +1,63 @@
+$dim-cube: 21.3vh;
+
+*{
+    margin: 0;
+    box-sizing: border-box;
+}
+header{
+    background-color: #3A3939;
+    color: white;
+    h1{
+        text-align: center;
+        padding-bottom: 25px;
+    }
+    p{
+        padding: 5px;
+    }
+}
+main{
+    display: flex;
+    justify-content: center;
+    background-color: black;
+    padding: 15px;
+    >div{
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        width: $dim-cube*2;
+        height: $dim-cube*4;
+        .cubo{
+            width: $dim-cube;
+            height: $dim-cube;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            p{
+                font-size: 55px;
+                color: white;
+            }
+            
+        }
+        .anim {
+            animation: palpitacion 1s alternate;
+        }
+        .anim2 {
+            animation: correcto 1s alternate;
+        }
+        .red{
+            background-color: #E54C4C;
+        }
+        .black{
+            background-color: #3E3E3E;
+        }
+    }
+
+}
+@keyframes palpitacion {
+                0% {border:0px rgba(18, 255, 243, 0.582) solid; }
+                100% {border:15px rgba(18, 255, 243, 0.582) solid;}
+            }
+@keyframes correcto {
+                0% {border:0px rgba(255, 255, 255, 0.822) solid; }
+                100% {border:15px rgb(255, 255, 255, 0.822) solid;}
+            }

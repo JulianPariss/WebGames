@@ -1,0 +1,101 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+header {
+  background-color: #3A3939;
+  color: white;
+}
+
+header h1 {
+  text-align: center;
+  padding-bottom: 25px;
+}
+
+header p {
+  padding: 5px;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  background-color: black;
+  padding: 15px;
+}
+
+main > div {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 42.6vh;
+  height: 85.2vh;
+}
+
+main > div .cubo {
+  width: 21.3vh;
+  height: 21.3vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+main > div .cubo p {
+  font-size: 55px;
+  color: white;
+  user-select: none;
+}
+
+main > div .anim {
+  animation: palpitacion 1s alternate;
+}
+
+main > div .red {
+  background-color: #E54C4C;
+}
+
+main > div .black {
+  background-color: #3E3E3E;
+}
+
+#fondo{
+  background-color: #3a3939c2;
+  color: white;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 4;
+}
+#boton {
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #3E3E3E;
+  color: white;
+}
+
+#protector {
+  position: absolute;
+  z-index: 3;
+  background-color: rgba(0, 204, 255, 0.233);
+}
+
+
+@keyframes palpitacion {
+  0% {
+    border: 0px rgba(241, 255, 52, 0.582) solid;
+  }
+  100% {
+    border: 15px rgba(79, 255, 52, 0.87) solid;
+  }
+}
+
+@keyframes correcto {
+  0% {
+    border: 0px rgba(255, 255, 255, 0.822) solid;
+  }
+  100% {
+    border: 15px white solid;
+  }
+}
+/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 2</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="tablero">
+    <h1>PIEDRA PAPEL O TIJERA</h1>
+    <h2 id="mensaje">Mensaje</h2>
+    <div class="puntuacion">
+        <h2 id="puntajeUsuario">0</h2>
+        <h2> VS </h2>
+        <h2 id="puntajeMaquina">0</h2>
+    </div>
+    <div class="imagenes">
+        <img src="img/piedra.png" alt="piedra" onclick="gameObject.game('piedra')">
+        <img src="img/papel.png" alt="papel" onclick="gameObject.game('papel')">
+        <img src="img/tijera.png" alt="tijera" onclick="gameObject.game('tijera')">
+    </div>
+    </div>
+
+    <script src="scripts/piedraPapelTijera.js"></script>
+</body>
+</html>
