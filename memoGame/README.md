@@ -1,5 +1,34 @@
+# English/Ingles
 
-### About Proyect: 
+### About proyect
+This proyect was made with: 
+* HTML
+* CSS
+* SASS
+* JavaScript
+
+All proyect was made with totaly vanilla languaje, dont use any library or framework and the design is fully original 
+I made all and with him i could aplicate many concept lerned.
+
+
+### WorkFlow
+1. After defined an idea, i started with the develop of design in [Figma](https://www.figma.com/file/wpGHhkaaAharDeJ6GANug2/Untitled?node-id=0%3A1).
+2. I created the local proyect files, and started develop HTML document.
+3. I used SASS and CSS for give style to proyect.
+4. I added functionalities to the game with JavaScript.
+5. I Uploaded the proyect to Github
+6. Recived feedback
+7. Error fixed
+8. UX upgraded
+9. Proyect finished
+
+ ### Final results: [Run Game :memo:](https://julianpariss.github.io/WebGames/memoGame) 
+ 
+ ¡I hope they can upgrade they memorice skills!
+
+# Español/Spanish
+
+### Acerca del proyecto: 
 El siguiente proyecto fue realizado con los siguiente lenguajes: 
 * HTML
 * CSS
@@ -9,7 +38,7 @@ El siguiente proyecto fue realizado con los siguiente lenguajes:
 No se utilizo ninguna libreria ni framework, y el diseño es completamente original mio. 
 Este proyecto fue desarrollado completamente por mi, de extremo a extremo. Con el pude aplicar muchos conceptos aprendidos con el fin de hacerlos propios.
 
-### Poyect WorkFlow
+### Flujo de trabajo del proyecto
 1. Luego de definir la idea, comence a desarrollar el diseño en [Figma](https://www.figma.com/file/wpGHhkaaAharDeJ6GANug2/Untitled?node-id=0%3A1).
 2. Cree el proyecto de manera local donde comence a maquetar el documento HTML.
 3. Utilice SASS y CSS para dar estilo al proyecto.
@@ -21,7 +50,7 @@ Este proyecto fue desarrollado completamente por mi, de extremo a extremo. Con e
 9. Finalice el proyecto.
 
 
- ### Resultado final: [Run Game :memo:](https://julianpariss.github.io/WebGames/memoGame) 
+ ### Resultado final: [Jugar :memo:](https://julianpariss.github.io/WebGames/memoGame) 
  
  ¡Espero que logren entrenar la memoria!
 
