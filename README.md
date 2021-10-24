@@ -1,7 +1,8 @@
 # GAMES PROYECTS
 
-<ol> 
-  <li> <a href = "https://julianpariss.github.io/Frontend/Games/memoGame">Memo Game</a>  </li>
-  <li> <a href = "https://julianpariss.github.io/Frontend/Games/adventureGame">Adventure Game</a>  </li>
-  <li> <a href = "https://julianpariss.github.io/Frontend/Games/piedraPapelTijera">Piedra papel o tijera</a>  </li>
-</ol>
+ * ### [Jumper Game :rabbit:](https://julianpariss.github.io/WebGames/JumperGame)
+ * ### [Memo Game :memo:](https://julianpariss.github.io/WebGames/JumperGame)
+ * ### [Coin collector :moneybag:](https://julianpariss.github.io/WebGames/JumperGame)
+ * ### [Rock Paper and Scissors :open_hands:](https://julianpariss.github.io/WebGames/JumperGame)
+
+
