@@ -5,3 +5,5 @@
  Las imagenes fueron descargadas de google images, y desconozco el autor original. 
  
  ### [Run game :open_hands:](https://julianpariss.github.io/WebGames/piedraPapelTijera)
+
+¿Que deparara el destino hoy?
