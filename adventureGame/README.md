@@ -1,3 +1,4 @@
+# English/Ingles
 
 ### About Proyect: 
 #### Made with: 
@@ -17,7 +18,7 @@ It designed for be played in mobile, but its totally compatible with desktop use
 
 ¿How many coins you can recollect?
 
-#Español/Spanish
+# Español/Spanish
 
 ### Acerca del proyecto: 
 #### Hecho con: 
