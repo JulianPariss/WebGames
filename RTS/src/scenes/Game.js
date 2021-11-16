@@ -1,7 +1,6 @@
 import Phaser from "../lib/phaser.js"
 import Character from "../game/character.js";
 
-
 export default class Game extends Phaser.Scene
 {
 
@@ -19,7 +18,8 @@ export default class Game extends Phaser.Scene
                 this.load.image('background','../assets/img/BackGround/bg_layer1.png');
                 //-----------
 
-                this.load.image('grass','../assets/img/Ground/slice01_01.png');
+                this.load.image('Grass','../assets/img/Ground/tile_0002.png');                
+                this.load.image('Sand','../assets/img/Ground/tile_0042.png');
                 this.load.image('tower','../assets/img/Ground/tower_grey.png');
 
                 // Units 
@@ -29,32 +29,39 @@ export default class Game extends Phaser.Scene
             // UI
                 
             //---
-
+            //this.load.json('configs','src/data/preConfigs.json');
 
         //-----------
     }
     create()
     {
-        this.add.image(240, 320, "background")
-         .setScrollFactor(1,0)
+        const data = this.cache.json.get('configs');
+        console.log(data);
 
+
+
+        this.add.image(240, 320, "background")
+        .setScrollFactor(1,0)
         this.ground = this.physics.add.staticGroup({
             classType: Character
         });
         const y = 500;
         
-        for (let i = 0; i < 15; i++){
-            const ground = this.ground.create(21,y,'grass');
-            ground.scaleX = 0.6;
+        function makeMap(gro) {
+            for (let i = 0; i < 15; i++){
+            const ground = gro.create(21,y,data.map);
+            ground.scale = 2.5;
             
         
             const body = ground.body;
             body.updateFromGameObject();
-            this.ground.setX(body.halfWidth,body.width);
+            gro.setX(body.halfWidth,body.width);
             body.updateFromGameObject();
 
-
+            }
         }
+        makeMap(this.ground);
+        
 
 
         const boton2 = this.add.sprite(240,300,'boton');
@@ -69,17 +76,12 @@ export default class Game extends Phaser.Scene
             const character = this.character.get(201,401,'character');
             character.setActive(true)
             character.setVisible(true)
-
-           
         })
-
-        //console.log(configTab.map);
 
     }
     update()
     { 
         this.character.getChildren().forEach(element => {
-            console.log(element);
             element.setMaxVelocity(70);
             element.setAccelerationX(20);
         });
