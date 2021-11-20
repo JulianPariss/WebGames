@@ -1,12 +1,6 @@
 import Phaser from "../lib/phaser.js"
 
 export default class Game extends Phaser.Scene{
-    config = {
-        jg: "",
-        ia: "",
-        dif: 0,
-        map: ""
-    }
     
     constructor(){
         super('configTab')
@@ -25,7 +19,6 @@ export default class Game extends Phaser.Scene{
         mapGrass.setInteractive();
 
         mapGrass.on('pointerdown',()=>{
-            this.config.mapGrass = "Grass";
             data.map = "Grass";
             console.log(data.map);
         })
@@ -34,7 +27,6 @@ export default class Game extends Phaser.Scene{
         mapSand.setInteractive();
 
         mapSand.on('pointerdown',()=>{
-            this.config.mapSand = "Sand";
             data.map = "Sand";
             console.log("Sand");
         })

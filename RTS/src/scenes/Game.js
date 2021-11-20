@@ -3,7 +3,6 @@ import Character from "../game/character.js";
 
 export default class Game extends Phaser.Scene
 {
-
     character
     ground
     constructor()
@@ -36,9 +35,7 @@ export default class Game extends Phaser.Scene
     create()
     {
         const data = this.cache.json.get('configs');
-        console.log(data);
-
-
+        //console.log(data);
 
         this.add.image(240, 320, "background")
         .setScrollFactor(1,0)
