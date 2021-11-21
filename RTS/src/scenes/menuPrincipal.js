@@ -14,6 +14,9 @@ export default class Game extends Phaser.Scene{
         //Ui Load
         this.load.image('BotonUnpressed','assets/img/UI/buttonLong_blue.png');
         this.load.image('BotonPressed','assets/img/UI/buttonLong_blue_pressed.png');
+        this.load.image('SmallBotonUnpressed','assets/img/UI/buttonSquare_blue.png');
+        this.load.image('SmallBotonPressed','assets/img/UI/buttonSquare_blue_pressed.png');
+        this.load.svg('Cog','assets/img/UI/cog-solid.svg')
 
         //Json Load
         this.load.json('config',"src/data/configurations.json");
@@ -43,32 +46,65 @@ export default class Game extends Phaser.Scene{
         // ------------------------------------------------------------------------------------------ 
 
         const arrayBotones = [];
-        console.log(this.determineLeng(configurations));
 
         arrayBotones[0] = {
             boton : this.add.sprite(240,140,'BotonUnpressed'),
-            text : this.add.text(240,320,this.determineLeng(configurations,es.boton1,en.boton1),{ fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' })
+            text : this.add.text(-200,-200,this.determineLeng(configurations,es.boton1,en.boton1))
         }
         arrayBotones[0].boton.setScale(1.5,1.5);
+        this.textRender(arrayBotones[0]);
 
         arrayBotones[1] = {
             boton : this.add.sprite(240,arrayBotones[0].boton.displayHeight + arrayBotones[0].boton.y +13,'BotonUnpressed'),
+            text : this.add.text (-200,-200,this.determineLeng(configurations,es.boton2,en.boton2))
         }
         arrayBotones[1].boton.setScale(1.5,1.5);
+        this.textRender(arrayBotones[1]);
 
         arrayBotones[2] = {
-            boton: this.add.sprite(240,arrayBotones[1].boton.displayHeight + arrayBotones[1].boton.y +160,'BotonUnpressed'),
+            boton : this.add.sprite(240,arrayBotones[1].boton.displayHeight + arrayBotones[1].boton.y +160,'BotonUnpressed'),
+            text : this.add.text(-200,-200,this.determineLeng(configurations,es.boton3,en.boton3))
         }
         arrayBotones[2].boton.setScale(1.5,1.5);
+        this.textRender(arrayBotones[2]);
 
+        arrayBotones[3] = {
+            boton :this.add.sprite(440,40,'SmallBotonUnpressed'),
+            img : this.add.image(440,40,'Cog'),
+            animation : false
+        }
+        arrayBotones[3].img.setScale(0.2,0.2)
+        arrayBotones[3].img.setTintFill(13027014);
 
+        arrayBotones.forEach(element => {
+            element.boton.setInteractive();
+        });
 
+        arrayBotones[3].boton.on('pointerdown',function cog(){
+            arrayBotones[3].animation = true;
+            arrayBotones[3].boton.off('pointerdown')
+            setTimeout( () => {
+                arrayBotones[3].animation = false;
+                arrayBotones[3].boton.on('pointerdown',cog)
+            },1000)
+        })
 
+        this.botones = arrayBotones;
+
+        
     }
     update(){
         this.backGround[0].setX(this.backGround[0].x+ this.backGroundSpeed);
         this.backGround[1].setX(this.backGround[1].x+ this.backGroundSpeed);
         this.horizontalWrap(this.backGround)    
+
+
+        if (this.botones[3].animation) {
+            this.botones[3].img.angle += 5;
+        }
+            
+
+
     }
     horizontalWrap (arrayBackground) 
     {
@@ -94,6 +130,18 @@ export default class Game extends Phaser.Scene{
             default:
                 return "unknow";    
         }
+    }
+    textRender (objeto) {
+        objeto.text.setFontFamily('Times, "Times New Roman", Georgia, serif');
+
+        const halfWidth = objeto.text.width/2;
+        const halfHeight = objeto.text.height/2;
+
+        objeto.text.setX(objeto.boton.x-halfWidth);
+        objeto.text.setY(objeto.boton.y-halfHeight); 
+
+        objeto.text.setColor("#C6C6C6")
+        
     }
 
 }
