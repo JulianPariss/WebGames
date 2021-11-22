@@ -1,6 +1,7 @@
 import Phaser from "./lib/phaser.js"
 import Game from "./scenes/Game.js"
 import MenuPrincipal from "./scenes/menuPrincipal.js"
+//import MenuConfig from "./scenes/menuConfig.js"
 //import configTab from "./scenes/configTab.js"
 
 export default new Phaser.Game({

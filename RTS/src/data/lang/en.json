@@ -1,5 +1,8 @@
 {
     "boton1" : "Singleplayer",
     "boton2" : "Multiplayer",
-    "boton3" : "Exit"  
+    "boton3" : "Exit",
+    "boton4" : "Sound",
+    "boton5" : "Language",
+    "boton6" : "Credits"   
 }
