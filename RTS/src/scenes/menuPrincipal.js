@@ -7,6 +7,8 @@ export default class menuPrincipal extends Phaser.Scene{
     backGround
     botones
     configurations
+    arrayLenguaje
+    idiomaActual
     constructor(){
         super('menuPrincipal');
     }
@@ -21,6 +23,8 @@ export default class menuPrincipal extends Phaser.Scene{
         this.load.image('SmallBotonPressed','assets/img/UI/buttonSquare_blue_pressed.png');
         this.load.svg('Cog','assets/img/UI/cog-solid.svg');
         this.load.svg('BackArrow','assets/img/UI/arrow-solid.svg');
+        this.load.image('arrowLeft', 'assets/img/UI/arrowBlue_left.png');
+        this.load.image('arrowRight', 'assets/img/UI/arrowBlue_right.png')
 
         //Json Load
         this.load.json('config',"src/data/configurations.json");
@@ -43,7 +47,7 @@ export default class menuPrincipal extends Phaser.Scene{
 
         // BackGround -------------------------------------------------------------------------------
         const arrayBackground = [];
-
+        
         arrayBackground[0] = this.add.image(0,320,'M_BackGround');
         arrayBackground[0].setScale(1.5,1.5);
         
@@ -51,7 +55,7 @@ export default class menuPrincipal extends Phaser.Scene{
         arrayBackground[1].setScale(1.5,1.5); 
 
         this.backGround = arrayBackground;
-        this.backGroundSpeed = 1.5;
+        this.backGroundSpeed = 0.5;
         // ------------------------------------------------------------------------------------------ 
 
         const frames = [];
@@ -73,7 +77,7 @@ export default class menuPrincipal extends Phaser.Scene{
 
         }
 
-        const anim = this.anims.create(config);
+        this.anims.create(config);
 
         const arrayBotones = [];
 
@@ -81,12 +85,19 @@ export default class menuPrincipal extends Phaser.Scene{
         this.mainMenu();
         arrayBotones[6].boton.on('pointerdown',() => {this.cogAnimationPlay()});
         arrayBotones[7].boton.on('pointerdown',() => {this.mainMenu()})
+        arrayBotones[4].boton.on('pointerdown',() => {this.createLanguageMenu()}); 
+        arrayBotones[11].boton.on('pointerdown',() => {this.siguienteLenguaje()});
 
-        for (let i = 0; i < 6; i++) {
-            this.botones[i].boton.on('pointerdown',() =>{
-                this.botones[i].boton.play('run')
-            })        
+        for (let i = 0; i < 11; i++) {
+            if ((i !== 6)&&(i !== 7)&&(i !== 8)) {
+                this.botones[i].boton.on('pointerdown',() =>{
+                    this.botones[i].boton.play('run')
+                })  
+            }       
         }
+
+        this.arrayLenguaje = ["es","en","it"]
+        this.idiomaActual = this.configurations.lan
 
     }
     update(){
@@ -153,6 +164,15 @@ export default class menuPrincipal extends Phaser.Scene{
             case 'boton6' : 
                 return len.boton6;
                 break;
+            case 'boton7' :
+                return len.boton7;
+                break;
+            case 'boton8' : 
+                return len.boton8;
+                break;
+            case 'boton9' :
+                return len.boton9;
+                break;             
             default :
                 return "MissingButton"               
         }
@@ -170,14 +190,16 @@ export default class menuPrincipal extends Phaser.Scene{
         
     }
     createElements (arrayBotones) {
-        for (let i = 0; i < 6; i++) {
-            arrayBotones[i] = {
-                boton : this.add.sprite(-200,-200,'BotonUnpressed'),
-                text : this.add.text(-200,-200)
-            }
-            arrayBotones[i].boton.setScale(1.5,1.5);
-            arrayBotones[i].boton.setVisible(false);
-            arrayBotones[i].boton.setInteractive();
+        for (let i = 0; i < 11; i++) {
+            if ((i !== 6) && (i!== 7)) {
+                arrayBotones[i] = {
+                    boton : this.add.sprite(-200,-200,'BotonUnpressed'),
+                    text : this.add.text(-200,-200)
+                }
+                arrayBotones[i].boton.setScale(1.5,1.5);
+                arrayBotones[i].boton.setVisible(false);
+                arrayBotones[i].boton.setInteractive();
+            }   
         }
         arrayBotones[6] = {
             boton :this.add.sprite(-200,-200,'SmallBotonUnpressed'),
@@ -195,6 +217,17 @@ export default class menuPrincipal extends Phaser.Scene{
         arrayBotones[7].text.setScale(0.2,0.2);
         arrayBotones[7].text.setTintFill(13027014);
         arrayBotones[7].boton.setInteractive();
+
+        arrayBotones[11] = {
+            boton : this.add.sprite(-200,-200,'arrowLeft'),
+        }
+        arrayBotones[11].boton.setInteractive();
+        arrayBotones[11].boton.setScale(1.2,1.2)
+        arrayBotones[12] = {
+            boton : this.add.sprite(-200,-200,'arrowRight'),
+        }
+        arrayBotones[12].boton.setInteractive();
+        arrayBotones[12].boton.setScale(1.2,1.2)
 
         return arrayBotones;
 
@@ -243,7 +276,10 @@ export default class menuPrincipal extends Phaser.Scene{
     clearMenu () {
         this.botones.forEach(element => {
             element.boton.setVisible(false);
-            element.text.setVisible(false);
+            if (element.text !== undefined) {
+                element.text.setVisible(false);
+            }
+            
         });
     }
     createConfigMenu () {
@@ -272,5 +308,43 @@ export default class menuPrincipal extends Phaser.Scene{
         this.botones[5].boton.setPosition(this.width/2,this.botones[4].boton.displayHeight + this.botones[4].boton.y +160);
         this.textRender(this.botones[5]); 
     }
-    
+    createLanguageMenu(){
+        this.clearMenu();
+
+        for (let i = 6; i < 13; i++) {
+            this.botones[i].boton.setVisible(true);
+            if (this.botones[i].text !== undefined) {
+                this.botones[i].text.setVisible(true);
+            }
+            
+        }
+        
+        this.botones[8].boton.setPosition(this.width/2,161);
+        this.botones[8].text.setText(this.determineLeng("boton7"));
+        this.textRender(this.botones[8]);
+
+        this.botones[11].boton.setPosition(this.botones[8].boton.x - this.botones[8].boton.displayWidth/2 - 20,this.botones[8].boton.y)
+        this.botones[12].boton.setPosition(this.botones[8].boton.x + this.botones[8].boton.displayWidth/2 + 20,this.botones[8].boton.y)
+
+        this.botones[9].boton.setPosition(this.width/2,this.botones[9].boton.displayHeight*2 + this.botones[8].boton.y);
+        this.botones[9].text.setText(this.determineLeng("boton8"));
+        this.textRender(this.botones[9]);
+
+        this.botones[10].boton.setPosition(this.width/2,this.botones[10].boton.displayHeight + this.botones[9].boton.y+16);
+        this.botones[10].text.setText(this.determineLeng("boton9"));
+        this.textRender(this.botones[10]);
+
+    }
+    siguienteLenguaje () {
+        const indice = this.arrayLenguaje.indexOf(this.idiomaActual);
+        if (indice === this.arrayLenguaje.length - 1) {
+            this.idiomaActual = this.arrayLenguaje[0]
+        } else this.idiomaActual = this.arrayLenguaje[indice+1];
+        this.sobreescribirJson();
+    }
+    sobreescribirJson(){
+        this.configurations.lan = this.idiomaActual;
+        this.createLanguageMenu();
+        //this.configurations.addToCache();
+    }
 }

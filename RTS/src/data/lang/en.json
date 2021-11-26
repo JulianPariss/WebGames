@@ -4,5 +4,8 @@
     "boton3" : "Exit",
     "boton4" : "Sound",
     "boton5" : "Language",
-    "boton6" : "Credits"   
+    "boton6" : "Credits",
+    "boton7" : "Ingles",
+    "boton8" : "Aplicate",
+    "boton9" : "Cancel"    
 }
