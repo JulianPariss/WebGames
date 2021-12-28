@@ -5,7 +5,7 @@
  * ### [Coin collector :moneybag:](https://github.com/JulianPariss/WebGames/tree/main/adventureGame)
  * ### [Rock Paper and Scissors :open_hands:](https://github.com/JulianPariss/WebGames/tree/main/piedraPapelTijera)
  * ## Actualmente trabajo en este proyecto personal:
- * ### [RTS Game](https://github.com/JulianPariss/WebGames/tree/main/RTS)
+ * ### [RTS Game](https://github.com/JulianPariss/WebGames/RTS)
    
 
 
