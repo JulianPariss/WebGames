@@ -5,10 +5,17 @@ export default class menuPrincipal extends Phaser.Scene{
     height
     backGroundSpeed
     backGround
-    botones
+
+    largeButtonArray
+    especialButtons
+
+
     configurations
     arrayLenguaje
     idiomaActual
+    idiomaAnterior
+    
+
     constructor(){
         super('menuPrincipal');
     }
@@ -38,9 +45,8 @@ export default class menuPrincipal extends Phaser.Scene{
     create(){
         //Json inicialize
         this.configurations = this.cache.json.get('config');
-
+        //---------------
         let {width,height} = this.sys.game.canvas;
-
         this.width = width;
         this.height = height;
         //---------------
@@ -57,6 +63,8 @@ export default class menuPrincipal extends Phaser.Scene{
         this.backGround = arrayBackground;
         this.backGroundSpeed = 0.5;
         // ------------------------------------------------------------------------------------------ 
+
+        // Animaciones-------------------------------------------------------------------------------
 
         const frames = [];
 
@@ -76,28 +84,80 @@ export default class menuPrincipal extends Phaser.Scene{
             repeat : 0
 
         }
-
         this.anims.create(config);
 
-        const arrayBotones = [];
-
-        this.botones = this.createElements(arrayBotones);
-        this.mainMenu();
-        arrayBotones[6].boton.on('pointerdown',() => {this.cogAnimationPlay()});
-        arrayBotones[7].boton.on('pointerdown',() => {this.mainMenu()})
-        arrayBotones[4].boton.on('pointerdown',() => {this.createLanguageMenu()}); 
-        arrayBotones[11].boton.on('pointerdown',() => {this.siguienteLenguaje()});
-
-        for (let i = 0; i < 11; i++) {
-            if ((i !== 6)&&(i !== 7)&&(i !== 8)) {
-                this.botones[i].boton.on('pointerdown',() =>{
-                    this.botones[i].boton.play('run')
-                })  
-            }       
+        // ------------------------------------------------------------------------------------------ 
+        
+        // Create largeButtons ----------------------------------------------------------------------
+        function Button(scene,type,key){
+            this.type = type;
+            this.key = key;
+            this.spr = scene.add.sprite(-200,-200,'BotonUnpressed')
+            this.spr.setScale(1.5,1.5);
+            this.spr.setVisible(false);
+            this.spr.setInteractive();
+            this.text = scene.add.text(-200,-200);
+            this.text.setVisible(false);
         }
 
+        this.largeButtonArray = [];
+
+        for (let i = 0; i < 9;i++){
+            let type = 'mainMenu';
+            if ((i > 2) && (i < 6)) {
+                type = 'configMenu';
+            } else if ((i > 5) && (i < 9)){
+                type = 'lenguageMenu';
+            }
+            this.largeButtonArray[i] = new Button(this,type,"boton"+i)
+            this.largeButtonArray[i].spr.on('pointerdown',() =>{
+                this.largeButtonArray[i].spr.play('run')
+            })
+        }
+        // ------------------------------------------------------------------------------------------ 
+
+        this.especialButtons = {
+            configButton : {
+                key : "mainMenu",
+                spr : this.add.sprite(-200,-200,'SmallBotonUnpressed'),
+                text : this.add.image(-200,-200,'Cog'),
+                animation : false
+            },
+            backButton : {
+                key : "configMenu",
+                spr : this.add.sprite(-200,-200,'SmallBotonUnpressed'),
+                text : this.add.image(-200,-200,'BackArrow')
+            }
+        }
+
+        this.especialButtons.configButton.text.setScale(0.2,0.2);
+        this.especialButtons.configButton.text.setTintFill(13027014);
+        this.especialButtons.configButton.spr.setInteractive();
+        this.especialButtons.configButton.spr.setPosition(440,40);
+        this.especialButtons.configButton.text.setPosition(440,40);
+
+
+        this.especialButtons.backButton.spr.setPosition(40,40);
+        this.especialButtons.backButton.text.setPosition(40,40);
+        this.especialButtons.backButton.text.setScale(0.2,0.2);
+        this.especialButtons.backButton.text.setTintFill(13027014);
+        this.especialButtons.backButton.spr.setInteractive();
+
+
+        this.createMainMenu();
+
+        this.especialButtons.configButton.spr.on('pointerdown',() => {this.cogAnimationPlay()});
+        this.especialButtons.backButton.spr.on('pointerdown',() => {this.determineBack()})
+        this.largeButtonArray[4].spr.on('pointerdown',() => {this.createLanguageMenu()});
+        this.largeButtonArray[0].spr.on('pointerdown',() => {this.scene.start('game')}); 
+
+        /* 
+        arrayBotones[11].boton.on('pointerdown',() => {this.siguienteLenguaje()});
+        arrayBotones[10].boton.on('pointerdown',()=> {this.cancelarCambioLenguaje()}) */
+
         this.arrayLenguaje = ["es","en","it"]
-        this.idiomaActual = this.configurations.lan
+        this.idiomaActual = this.configurations.lan;
+        this.idiomaAnterior = this.configurations.lan;
 
     }
     update(){
@@ -106,10 +166,10 @@ export default class menuPrincipal extends Phaser.Scene{
         this.horizontalWrap(this.backGround)    
 
 
-        if (this.botones[6].animation) {
-            this.botones[6].text.angle += 7;
+         if (this.especialButtons.configButton.animation) {
+            this.especialButtons.configButton.text.angle += 7;
         }
-            
+             
 
 
     }
@@ -119,11 +179,9 @@ export default class menuPrincipal extends Phaser.Scene{
 
         if (arrayBackground[0].x > display){
             arrayBackground[0].setX(arrayBackground[1].x-display)
-            //console.log("entro0");
         }
         if (arrayBackground[1].x > display){
             arrayBackground[1].setX(arrayBackground[0].x-display)
-            //console.log("entro1");
         }
     }
     determineLeng (boton){
@@ -146,32 +204,32 @@ export default class menuPrincipal extends Phaser.Scene{
     }
     determineBoton(boton,len){
         switch(boton){
-            case 'boton1':
+            case 'boton0':
+                return len.boton0;
+                break;
+            case 'boton1' :
                 return len.boton1;
                 break;
-            case 'boton2' :
+            case 'boton2' : 
                 return len.boton2;
                 break;
-            case 'boton3' : 
+            case 'boton3' :
                 return len.boton3;
                 break;
             case 'boton4' :
                 return len.boton4;
                 break;
-            case 'boton5' :
+            case 'boton5' : 
                 return len.boton5;
                 break;
-            case 'boton6' : 
+            case 'boton6' :
                 return len.boton6;
                 break;
-            case 'boton7' :
+            case 'boton7' : 
                 return len.boton7;
                 break;
-            case 'boton8' : 
+            case 'boton8' :
                 return len.boton8;
-                break;
-            case 'boton9' :
-                return len.boton9;
                 break;             
             default :
                 return "MissingButton"               
@@ -183,41 +241,14 @@ export default class menuPrincipal extends Phaser.Scene{
         const halfWidth = objeto.text.width/2;
         const halfHeight = objeto.text.height/2;
 
-        objeto.text.setX(objeto.boton.x-halfWidth);
-        objeto.text.setY(objeto.boton.y-halfHeight); 
+        objeto.text.setX(objeto.spr.x-halfWidth);
+        objeto.text.setY(objeto.spr.y-halfHeight); 
 
         objeto.text.setColor("#C6C6C6")
         
     }
-    createElements (arrayBotones) {
-        for (let i = 0; i < 11; i++) {
-            if ((i !== 6) && (i!== 7)) {
-                arrayBotones[i] = {
-                    boton : this.add.sprite(-200,-200,'BotonUnpressed'),
-                    text : this.add.text(-200,-200)
-                }
-                arrayBotones[i].boton.setScale(1.5,1.5);
-                arrayBotones[i].boton.setVisible(false);
-                arrayBotones[i].boton.setInteractive();
-            }   
-        }
-        arrayBotones[6] = {
-            boton :this.add.sprite(-200,-200,'SmallBotonUnpressed'),
-            text : this.add.image(-200,-200,''),
-            animation : false
-        }
-        arrayBotones[6].text.setScale(0.2,0.2);
-        arrayBotones[6].text.setTintFill(13027014);
-        arrayBotones[6].boton.setInteractive();
-
-        arrayBotones[7] = {
-            boton: this.add.sprite(-200,-200,'SmallBotonUnpressed'),
-            text : this.add.image(-200,-200,'')
-        }
-        arrayBotones[7].text.setScale(0.2,0.2);
-        arrayBotones[7].text.setTintFill(13027014);
-        arrayBotones[7].boton.setInteractive();
-
+    createElements () {
+        /* 
         arrayBotones[11] = {
             boton : this.add.sprite(-200,-200,'arrowLeft'),
         }
@@ -227,114 +258,139 @@ export default class menuPrincipal extends Phaser.Scene{
             boton : this.add.sprite(-200,-200,'arrowRight'),
         }
         arrayBotones[12].boton.setInteractive();
-        arrayBotones[12].boton.setScale(1.2,1.2)
-
-        return arrayBotones;
-
+        arrayBotones[12].boton.setScale(1.2,1.2) */
     }
-    mainMenu () {
+    createMainMenu () {
         this.clearMenu();
 
-        for (let i = 0; i < 3; i++) {
-            this.botones[i].boton.setVisible(true);
-            this.botones[i].text.setVisible(true);
-        }
-
-        this.botones[6].boton.setVisible(true);
-        this.botones[6].text.setVisible(true);
-
-
-        this.botones[0].boton.setPosition(this.width/2,140);
-        this.botones[0].text.setText(this.determineLeng("boton1"))
-        this.textRender(this.botones[0]);
-
-        this.botones[1].boton.setPosition(this.width/2,this.botones[0].boton.displayHeight + this.botones[0].boton.y +13);
-        this.botones[1].text.setText(this.determineLeng("boton2"))
-        this.textRender(this.botones[1]);
-
-        this.botones[2].boton.setPosition(this.width/2,this.botones[1].boton.displayHeight + this.botones[1].boton.y +160);
-        this.botones[2].text.setText(this.determineLeng("boton3"))
-        this.textRender(this.botones[2]);
-
-        this.botones[6].boton.setPosition(440,40);
-        this.botones[6].text.setPosition(440,40);
-        this.botones[6].text.setTexture('Cog');
-
-    }
-    cogAnimationPlay() {
-        this.botones[6].animation = true;
-        this.botones[6].boton.off('pointerdown');
-        setTimeout(() => {
-            this.cogAnimationStop(this.botones,this.configurations)},500);
-    }
-
-    cogAnimationStop (boton,configurations) {
-        boton[6].animation = false;
-        this.createConfigMenu(configurations)
-        boton[6].boton.on('pointerdown',() => {this.cogAnimationPlay()});
-    }
-    clearMenu () {
-        this.botones.forEach(element => {
-            element.boton.setVisible(false);
-            if (element.text !== undefined) {
-                element.text.setVisible(false);
+        this.largeButtonArray.forEach(element => {
+            if (element.type === "mainMenu") {
+                element.spr.setVisible(true);
+                element.text.setVisible(true);
+                if (element.key === "boton0") {
+                    element.spr.setPosition(this.width/2,element.spr.displayHeight+109);
+                    element.text.setText(this.determineLeng(element.key));
+                }
+                else if (element.key === "boton1") {
+                    element.spr.setPosition(this.width/2,element.spr.displayHeight+197);
+                    element.text.setText(this.determineLeng(element.key));
+                }
+                else if (element.key === "boton2") {
+                    element.spr.setPosition(this.width/2,element.spr.displayHeight+432);
+                    element.text.setText(this.determineLeng(element.key));
+                }
+                this.textRender(element);
             }
-            
         });
+        this.especialButtons.configButton.spr.setVisible(true);
+        this.especialButtons.configButton.text.setVisible(true);
     }
     createConfigMenu () {
+
         this.clearMenu();
-        for (let i = 3; i < 6; i++) {
-            this.botones[i].boton.setVisible(true);
-            this.botones[i].text.setVisible(true);
-        }
 
-        this.botones[7].boton.setVisible(true);
-        this.botones[7].text.setVisible(true);
+        this.largeButtonArray.forEach(element => {
+            if (element.type === "configMenu") {
+                element.spr.setVisible(true);
+                element.text.setVisible(true);
+                if (element.key === "boton3") {
+                    element.spr.setPosition(this.width/2,element.spr.displayHeight+109);
+                    element.text.setText(this.determineLeng(element.key));
+                }
+                else if (element.key === "boton4") {
+                    element.spr.setPosition(this.width/2,element.spr.displayHeight+197);
+                    element.text.setText(this.determineLeng(element.key));
+                }
+                else if (element.key === "boton5") {
+                    element.spr.setPosition(this.width/2,element.spr.displayHeight+432);
+                    element.text.setText(this.determineLeng(element.key));
+                }
+                this.textRender(element);
+            }
+        });
+        this.especialButtons.backButton.key = "mainMenu";
 
-        this.botones[7].boton.setPosition(40,40);
-        this.botones[7].text.setPosition(40,40);
-        this.botones[7].text.setTexture('BackArrow');
+        this.especialButtons.configButton.spr.setVisible(true);
+        this.especialButtons.configButton.text.setVisible(true);
 
-        this.botones[3].text.setText(this.determineLeng("boton4"));
-        this.botones[3].boton.setPosition(this.width/2,140);
-        this.textRender(this.botones[3]);
-
-        this.botones[4].text.setText(this.determineLeng("boton5"));
-        this.botones[4].boton.setPosition(this.width/2,this.botones[3].boton.displayHeight + this.botones[3].boton.y +13);
-        this.textRender(this.botones[4]);
-
-        this.botones[5].text.setText(this.determineLeng("boton6"));
-        this.botones[5].boton.setPosition(this.width/2,this.botones[4].boton.displayHeight + this.botones[4].boton.y +160);
-        this.textRender(this.botones[5]); 
+        this.especialButtons.backButton.spr.setVisible(true);
+        this.especialButtons.backButton.text.setVisible(true);
     }
     createLanguageMenu(){
         this.clearMenu();
 
-        for (let i = 6; i < 13; i++) {
-            this.botones[i].boton.setVisible(true);
-            if (this.botones[i].text !== undefined) {
-                this.botones[i].text.setVisible(true);
-            }
-            
-        }
-        
-        this.botones[8].boton.setPosition(this.width/2,161);
-        this.botones[8].text.setText(this.determineLeng("boton7"));
-        this.textRender(this.botones[8]);
 
+        this.largeButtonArray.forEach(element => {
+            if (element.type === "lenguageMenu") {
+                element.spr.setVisible(true);
+                element.text.setVisible(true);
+                if (element.key === "boton6") {
+                    element.spr.setPosition(this.width/2,element.spr.displayHeight+109);
+                    element.text.setText(this.determineLeng(element.key));
+                }
+                else if (element.key === "boton7") {
+                    element.spr.setPosition(this.width/2,element.spr.displayHeight+197);
+                    element.text.setText(this.determineLeng(element.key));
+                }
+                else if (element.key === "boton8") {
+                    element.spr.setPosition(this.width/2,element.spr.displayHeight+432);
+                    element.text.setText(this.determineLeng(element.key));
+                }
+                this.textRender(element);
+            }
+        });
+        this.especialButtons.backButton.key = "configMenu";
+
+        this.especialButtons.configButton.spr.setVisible(true);
+        this.especialButtons.configButton.text.setVisible(true);
+
+        this.especialButtons.backButton.spr.setVisible(true);
+        this.especialButtons.backButton.text.setVisible(true);
+
+        /* 
         this.botones[11].boton.setPosition(this.botones[8].boton.x - this.botones[8].boton.displayWidth/2 - 20,this.botones[8].boton.y)
         this.botones[12].boton.setPosition(this.botones[8].boton.x + this.botones[8].boton.displayWidth/2 + 20,this.botones[8].boton.y)
-
-        this.botones[9].boton.setPosition(this.width/2,this.botones[9].boton.displayHeight*2 + this.botones[8].boton.y);
-        this.botones[9].text.setText(this.determineLeng("boton8"));
-        this.textRender(this.botones[9]);
-
-        this.botones[10].boton.setPosition(this.width/2,this.botones[10].boton.displayHeight + this.botones[9].boton.y+16);
-        this.botones[10].text.setText(this.determineLeng("boton9"));
-        this.textRender(this.botones[10]);
+         */
 
     }
+    determineBack() {
+        switch (this.especialButtons.backButton.key) {
+            case 'mainMenu' : this.createMainMenu();
+            break;
+            case 'configMenu' : this.createConfigMenu();
+            break;
+            default : this.createMainMenu();
+        }
+        
+    }
+
+    clearMenu () {
+        this.largeButtonArray.forEach(element => {
+            element.spr.setVisible(false);
+            element.text.setVisible(false);
+        });
+        this.especialButtons.configButton.spr.setVisible(false);
+        this.especialButtons.configButton.text.setVisible(false);
+
+        this.especialButtons.backButton.spr.setVisible(false);
+        this.especialButtons.backButton.text.setVisible(false);
+    }
+
+
+    cogAnimationPlay() {
+        this.especialButtons.configButton.animation = true;
+        this.especialButtons.configButton.spr.off('pointerdown');
+        setTimeout(() => {
+            this.cogAnimationStop(this.especialButtons,this.configurations)},500);
+    }
+
+    cogAnimationStop (boton,configurations) {
+        boton.configButton.animation = false;
+        this.createConfigMenu(configurations)
+        boton.configButton.spr.on('pointerdown',() => {this.cogAnimationPlay()});
+    }
+
+
     siguienteLenguaje () {
         const indice = this.arrayLenguaje.indexOf(this.idiomaActual);
         if (indice === this.arrayLenguaje.length - 1) {
@@ -346,5 +402,9 @@ export default class menuPrincipal extends Phaser.Scene{
         this.configurations.lan = this.idiomaActual;
         this.createLanguageMenu();
         //this.configurations.addToCache();
+    }
+    cancelarCambioLenguaje() {
+        this.configurations.lan = this.idiomaAnterior;
+        this.createConfigMenu();
     }
 }

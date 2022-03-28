@@ -1,11 +1,11 @@
 {
-    "boton1" : "Singleplayer",
-    "boton2" : "Multiplayer",
-    "boton3" : "Exit",
-    "boton4" : "Sound",
-    "boton5" : "Language",
-    "boton6" : "Credits",
-    "boton7" : "Ingles",
-    "boton8" : "Aplicate",
-    "boton9" : "Cancel"    
+    "boton0" : "Singleplayer",
+    "boton1" : "Multiplayer",
+    "boton2" : "Exit",
+    "boton3" : "Sound",
+    "boton4" : "Language",
+    "boton5" : "Credits",
+    "boton6" : "Ingles",
+    "boton7" : "Aplicate",
+    "boton8" : "Cancel"    
 }

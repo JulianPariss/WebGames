@@ -1,11 +1,11 @@
 {
-    "boton1" : "Un giocatore",
-    "boton2" : "Multigiocatore ",
-    "boton3" : "Uscire ",
-    "boton4" : "Suono",
-    "boton5" : "Lingua",
-    "boton6" : "Titoli di coda",
-    "boton7" : "Italian",
-    "boton8" : "Aplicar",
-    "boton9" : "Cancelar"   
+    "boton0" : "Un giocatore",
+    "boton1" : "Multigiocatore ",
+    "boton2" : "Uscire ",
+    "boton3" : "Suono",
+    "boton4" : "Lingua",
+    "boton5" : "Titoli di coda",
+    "boton6" : "Italian",
+    "boton7" : "Aplicar",
+    "boton8" : "Cancelar"   
 }
