@@ -1,1 +1,1 @@
- ### [Run game :open_hands:](https://julianpariss.github.io/WebGames/pong)
+ ### [Run game :open_hands:](https://julianpariss.github.io/WebGames/pong/)
