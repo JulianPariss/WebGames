@@ -28,6 +28,9 @@
             let paddle2X = 770;
             let paddle2Y = 250;
 
+            let score1 = 0;
+            let score2 = 0;
+
             window.onload = function () {
                 canvas = document.getElementById('gameCanvas');
                 canvasContext = canvas.getContext('2d');
@@ -64,6 +67,9 @@
             
                 colorRect(canvas.width*0.5-3,0+margin,6,canvas.height-margin*2,"#929292");
                 colorCircle(ballX,ballY,10,"#68df64");
+
+                drawText(canvas.width/4,100,score1,"30px Arial")
+                drawText(canvas.width/4*3,100,score2,"30px Arial")
             }
 
             function colorRect(posX,posY,dimX,dimY,fillColor){
@@ -78,6 +84,12 @@
                 canvasContext.arc(posX,posY,rad,0,Math.PI*2,true);
                 canvasContext.fill();
             }
+
+            function drawText(posX,posY,Text,font){
+                canvasContext.beginPath();
+                canvasContext.font = font;
+                canvasContext.fillText(Text,posX,posY);
+            } 
 
             function ballReset(dir) {
                 ballX = canvas.width/2;
@@ -97,15 +109,26 @@
 
                 if (ballX >= paddle2X-10 && ballX <= paddle2X){
                     if (ballY >= paddle2Y && ballY <= paddle2Y + paddleHeight && ballSpeedX == speed) {
+                        if (ballY > paddle2Y + paddleHeight/2){
+                            ballSpeedY = (speed + speed * (-1*((paddle2Y + paddleHeight/2) - ballY) /100))
+                        }
+                        if (ballY < paddle2Y + paddleHeight/2) {
+                            ballSpeedY = -(speed + speed * (((paddle2Y + paddleHeight/2) - ballY) /100))
+                        } else if (ballY == paddle2Y + paddleHeight/2){
+                            ballSpeedY = 0;
+                        }
                         ballSpeedX *= -1;
                     }
-                } else if (ballX >= paddle2X && ballX <= paddle2X+10){
+                } else if (ballX >= paddle2X && ballX <= paddle2X+10){ //Corners checks
                     if (ballY <= paddle2Y+10 && ballY >= paddle2Y-10 && ballSpeedX == speed){
                         ballSpeedX *= -1;
+                        ballSpeedY = -1*(speed + 2); 
                     } else if (ballY <= paddle2Y+paddleHeight+10 && ballY >= paddle2Y+paddleHeight-10 && ballSpeedX == speed){
                         ballSpeedX *= -1;
+                        ballSpeedY = speed + 2;
                     }
                 } else if (ballX > canvas.width - margin*2) {
+                    score1++;
                     ballReset(-1);
                 }
 
@@ -115,6 +138,7 @@
                 }
 
                 if (ballX < 0 + margin*2){
+                    score2++;
                     ballReset(1);
                 }
 
