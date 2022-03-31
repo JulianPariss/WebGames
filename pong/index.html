@@ -99,7 +99,8 @@
                 ballY = canvas.height/2;
                 ballSpeedY = 0;
                 ballSpeedX = 0;
-                setTimeout(function(){ballSpeedX = speed * dir, ballSpeedY = speed },500)
+                let rand = Math.random() * (4-(-3)) + (-3)
+                setTimeout(function(){ballSpeedX = speed * dir, ballSpeedY = rand },500)
             }
 
             function paddleIA(params) {
